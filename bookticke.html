@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theater Seat Booking</title>
+  <a href="movie3.html" class="home-link" >Back</a>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .screen {
+      background: #ddd;
+      color: black;
+      width: 60%;
+      margin: 20px auto;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    .theater {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .row-label { font-weight: bold; margin-right: 10px; width: 20px; }
+    .seat {
+      width: 30px; height: 30px; border-radius: 6px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: bold; user-select: none;
+    }
+    .empty { background: green; }
+    .selected { background: blue; }
+    .booked { background: red; cursor: not-allowed; }
+    .legend { margin-top: 25px; }
+    .legend span {
+      display: inline-block; width: 20px; height: 20px;
+      margin: 0 10px; border-radius: 4px;
+    }
+    .payment-box { margin-top: 30px; display: none; }
+    .pay-btn {
+      background: orange; border: none; padding: 12px 20px;
+      border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
+    }
+    .pay-btn:hover { background: darkorange; }
+  </style>
+</head>
+<body>
+  <h1> Theater Seat Booking</h1>
+  <div class="screen">SCREEN THIS WAY</div>
+  <div class="theater" id="theater"></div>
+
+  <div class="legend">
+    <p>
+      <span style="background: green;"></span> Empty
+      <span style="background: blue;"></span> Selected
+      <span style="background: red;"></span> Booked
+    </p>
+  </div>
+
+  <div class="payment-box" id="paymentBox">
+    <h3>Selected Seats: <span id="selectedSeats"></span></h3>
+    <button class="pay-btn" onclick="makePayment()">Proceed to Pay</button>
+  </div>
+
+  <script>
+    const rows = ["A","B","C","D"];
+    const seatsPerRow = 25;
+    const theater = document.getElementById("theater");
+    const paymentBox = document.getElementById("paymentBox");
+    const selectedSeatsDisplay = document.getElementById("selectedSeats");
+    let selectedSeats = [];
+
+    rows.forEach(row => {
+      const rowDiv = document.createElement("div");
+      rowDiv.classList.add("row");
+
+      const label = document.createElement("div");
+      label.classList.add("row-label");
+      label.innerText = row;
+      rowDiv.appendChild(label);
+
+      for (let i = 1; i <= seatsPerRow; i++) {
+        const seat = document.createElement("div");
+        seat.classList.add("seat", "empty");
+        seat.innerText = i;
+        seat.dataset.row = row;
+        seat.dataset.number = i;
+
+        seat.addEventListener("click", () => {
+          if (seat.classList.contains("booked")) return;
+
+          const seatId = row + i;
+          if (seat.classList.contains("selected")) {
+            seat.classList.remove("selected");
+            seat.classList.add("empty");
+            selectedSeats = selectedSeats.filter(s => s !== seatId);
+          } else {
+            seat.classList.remove("empty");
+            seat.classList.add("selected");
+            selectedSeats.push(seatId);
+          }
+
+          if (selectedSeats.length > 0) {
+            paymentBox.style.display = "block";
+            selectedSeatsDisplay.innerText = selectedSeats.join(", ");
+          } else {
+            paymentBox.style.display = "none";
+          }
+        });
+
+        rowDiv.appendChild(seat);
+      }
+      theater.appendChild(rowDiv);
+    });
+
+    function makePayment() {
+      const uniqueNo = "T" + Math.floor(Math.random() * 1000000);
+      const now = new Date().toLocaleString();
+
+      // Redirect to ticket page with details in URL
+      const url = `ticket.html?no=${uniqueNo}&seats=${encodeURIComponent(selectedSeats.join(","))}&time=${encodeURIComponent(now)}`;
+      window.location.href = url;
+    }
+  </script>
+  
+</body>
+</html>

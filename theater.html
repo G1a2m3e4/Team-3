@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Theater & Show</title>
+  <a href="movie1.html">home</a>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0f1a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 { margin-bottom: 20px; }
+
+    .theater {
+      background: #11161f;
+      padding: 15px 20px;
+      border-radius: 10px;
+      width: 350px;
+      margin-bottom: 15px;
+    }
+
+    .theater h2 { margin-top: 0; color: #ffd966; }
+
+    .show {
+      background: #222a36;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .show:hover {
+      background: #1e6fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Select Theater & Show</h1>
+
+  <div class="theater" data-theater="Sunshine Cinemas">
+    <h2>Sunshine Cinemas</h2>
+    <div class="show" data-time="10:00 AM">10:00 AM</div>
+    <div class="show" data-time="03:00 PM">03:00 PM</div>
+  </div>
+
+  <div class="theater" data-theater="Galaxy Multiplex">
+    <h2>Galaxy Multiplex</h2>
+    <div class="show" data-time="12:00 PM">12:00 PM</div>
+    <div class="show" data-time="06:00 PM">06:00 PM</div>
+  </div>
+
+  <script>
+    const movieName = localStorage.getItem('selectedMovie') || 'OG'; // stored from latestmovies.html
+
+    // Add click listener to all shows
+    document.querySelectorAll('.show').forEach(show => {
+      show.addEventListener('click', () => {
+        const theater = show.parentElement.getAttribute('data-theater');
+        const time = show.getAttribute('data-time');
+
+        // Save selected theater and show
+        localStorage.setItem('selectedTheater', theater);
+        localStorage.setItem('selectedTime', time);
+
+        // Redirect to seat booking page
+        window.location.href = 'booktickets.html';
+      });
+    });
+  </script>
+</body>
+</html>

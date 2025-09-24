@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Select Location</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .location-box {
+      margin-bottom: 20px;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #citySelect {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      background: #e50914;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #b2070f;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Select Your Location</h2>
+    <input id="searchInput" type="text" placeholder="Search city..." />
+    <select id="citySelect" size="6" aria-label="Cities">
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Mysore">Mysore</option>
+        <option value="delhi">delhi</option>
+        <option value="Vizag">Vizag</option>
+        <option value="Vijayawad">Vijayawad</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Pune">Pune</option>
+      </select>
+    <button id="continueBtn">Continue</button>
+    <div class="hint">Tip: double-click a city to select & continue.</div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const citySelect = document.getElementById('citySelect');
+    const continueBtn = document.getElementById('continueBtn');
+
+    function filterCities() {
+      const q = searchInput.value.trim().toLowerCase();
+      const opts = citySelect.options;
+      for (let i = 0; i < opts.length; i++) {
+        const txt = opts[i].textContent.toLowerCase();
+        // keep the first (placeholder) visible
+        if (i === 0) { opts[i].style.display = ''; continue; }
+        opts[i].style.display = txt.includes(q) ? '' : 'none';
+      }
+      // if filtered, try to auto-select first visible real city
+      for (let i = 1; i < opts.length; i++) {
+        if (opts[i].style.display !== 'none') { citySelect.selectedIndex = i; break; }
+      }
+    }
+
+    // allow double click to proceed
+    citySelect.addEventListener('dblclick', () => {
+      submitLocation();
+    });
+
+    continueBtn.addEventListener('click', submitLocation);
+    searchInput.addEventListener('input', filterCities);
+
+    function submitLocation() {
+      let selectedCity = citySelect.value || '';
+      // if nothing chosen, try to pick first visible city option
+      if (!selectedCity) {
+        for (let i = 1; i < citySelect.options.length; i++) {
+          if (citySelect.options[i].style.display !== 'none') {
+            selectedCity = citySelect.options[i].value;
+            break;
+          }
+        }
+      }
+
+      if (selectedCity) {
+        // save city and go to movies page
+        localStorage.setItem('userCity', selectedCity);
+        // redirect
+        window.location.href = 'latestmovies.html';
+      } else {
+        alert('Please select a location before continuing.');
+      }
+    }
+  </script>
+</body>
+</html>

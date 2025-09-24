@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Movie Booking</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: linear-gradient(#e6f0ff,#f7fff7); display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .box { background:white; padding:28px; border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.12); width:360px; text-align:center; }
+    input { width:90%; padding:10px; margin:8px 0; border-radius:6px; border:1px solid #ccc; }
+    button { width:94%; padding:10px; margin-top:10px; background:#1e6fff; color:white; border:0; border-radius:6px; cursor:pointer; }
+    #message { margin-top:10px; font-weight:bold; height:20px; }
+  </style>
 </head>
 <body>
-    <h1>Team-3</h1>
-    <h2>Team lead:DIVI SHRAVANI</h2>
-    <h3>Team members</h3>
-    <ol>
-        <li>CHITTEM LAVANYA</li>
-        <li>BANOTH SANTHOSH</li>
-        <li>HARSHINI RAVIKANTI</li>
-    </ol>
-    
+  <div class="box">
+    <h2>Login</h2>
+    <input id="email" type="email" placeholder="Email" value="" />
+    <input id="password" type="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    // Demo users
+    const users = [
+      { email: "user1@gmail.com", password: "Password_123" },
+      { email: "user2@gmail.com", password: "Tkr@123" }
+    ];
+
+    const msg = document.getElementById('message');
+    const emailEl = document.getElementById('email');
+    const passEl = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+
+    function showMessage(text, ok=true) {
+      msg.style.color = ok ? 'green' : 'red';
+      msg.textContent = text;
+    }
+
+    function login() {
+      const email = emailEl.value.trim();
+      const pwd = passEl.value.trim();
+
+      const valid = users.some(u => u.email === email && u.password === pwd);
+      if (valid) {
+        showMessage('Login successful — redirecting...');
+        // small delay so user sees message
+        setTimeout(() => {
+          // go to location selection page
+          window.location.href = 'location.html';
+        }, 800);
+      } else {
+        showMessage('Invalid email or password', false);
+      }
+    }
+
+    // click and Enter support
+    loginBtn.addEventListener('click', login);
+    [emailEl, passEl].forEach(el => el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') login();
+    }));
+  </script>
 </body>
 </html>

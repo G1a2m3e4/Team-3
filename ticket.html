@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Ticket</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #222;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .ticket {
+      background: white;
+      color: black;
+      width: 320px;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+      text-align: left;
+    }
+    .ticket h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .ticket p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      background: orange;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn:hover { background: darkorange; }
+  </style>
+</head>
+<body>
+  <div class="ticket">
+    <h2>🎬 Movie Ticket</h2>
+    <p><strong>Ticket No:</strong> <span id="ticketNo"></span></p>
+    <p><strong>Seats:</strong> <span id="ticketSeats"></span></p>
+    <p><strong>Date & Time:</strong> <span id="ticketTime"></span></p>
+    <p><strong>Status:</strong> ✅ Confirmed</p>
+    <a href="latestmovies.html" class="btn">Back to Booking</a>
+  </div>
+
+  <script>
+    // Get data from URL
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById("ticketNo").innerText = params.get("no");
+    document.getElementById("ticketSeats").innerText = params.get("seats");
+    document.getElementById("ticketTime").innerText = params.get("time");
+  </script>
+</body>
+</html>

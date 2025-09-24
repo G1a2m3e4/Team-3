@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Latest Movies</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#0b0f1a; color:#f3f3f3; margin:0; min-height:100vh; }
+    header{ padding:18px 30px; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(90deg,#0e1724,#14202d); }
+    .brand{ font-weight:700; font-size:20px; color:#ffd966; }
+    .city { color:#b9f2ff; font-size:14px; }
+    .container { padding:28px; display:flex; justify-content:center; }
+    .grid { display:flex; gap:18px; flex-wrap:wrap; max-width:1000px; justify-content:center; }
+    .card { background:#11161f; width:200px; border-radius:10px; overflow:hidden; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.6); }
+    .card img { width:100%; height:280px; object-fit:cover; display:block; }
+    .card a { display:block; padding:10px; color:#ffd; text-decoration:none; background:#0f1720; }
+    .card a:hover { background:#17303f; }
+    .logout { background:#ff5c5c; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">MOVIE TICKETS BOOKING</div>
+    <div>
+      <span class="city" id="cityDisplay">📍 Location: —</span>
+      &nbsp;&nbsp;
+      <a href="index.html" class="logout" id="logoutBtn">Logout</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="grid" id="movieGrid">
+      <!-- sample cards -->
+      <div class="card">
+        <img src="OG_Poster.jpg" alt="OG">
+        <a href="movie1.html">OG</a>
+      </div>
+      <div class="card">
+        <img src="spirit.jpg" alt="Spirit">
+        <a href="movie2.html">Spirit</a>
+      </div>
+      <div class="card">
+        <img src="rajasaab.jpg" alt="Raja Saab">
+        <a href="movie3.html">Raja Saab</a>
+      </div>
+      <!-- you can add more -->
+    </div>
+  </div>
+
+  <script>
+    // show selected city (saved from location.html)
+    const city = localStorage.getItem('userCity');
+    const cityDisplay = document.getElementById('cityDisplay');
+    if (city) {
+      cityDisplay.textContent = '📍 Location: ' + city;
+    } else {
+      cityDisplay.textContent = '📍 Location: (not set)';
+    }
+
+    // logout clears city and goes back to login
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      // if you want to clear saved city uncomment the next line:
+      // localStorage.removeItem('userCity');
+      // go to login page
+      // allow normal navigation to index.html
+    });
+  </script>
+</body>
+</html>
