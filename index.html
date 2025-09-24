@@ -13,53 +13,6 @@
   </style>
 </head>
 <body>
-  <div class="box">
-    <h2>Login</h2>
-    <input id="email" type="email" placeholder="Email" value="" />
-    <input id="password" type="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
-    <p id="message"></p>
-  </div>
+    
 
-  <script>
-    // Demo users
-    const users = [
-      { email: "user1@gmail.com", password: "Password_123" },
-      { email: "user2@gmail.com", password: "Tkr@123" }
-    ];
-
-    const msg = document.getElementById('message');
-    const emailEl = document.getElementById('email');
-    const passEl = document.getElementById('password');
-    const loginBtn = document.getElementById('loginBtn');
-
-    function showMessage(text, ok=true) {
-      msg.style.color = ok ? 'green' : 'red';
-      msg.textContent = text;
-    }
-
-    function login() {
-      const email = emailEl.value.trim();
-      const pwd = passEl.value.trim();
-
-      const valid = users.some(u => u.email === email && u.password === pwd);
-      if (valid) {
-        showMessage('Login successful — redirecting...');
-        // small delay so user sees message
-        setTimeout(() => {
-          // go to location selection page
-          window.location.href = 'location.html';
-        }, 800);
-      } else {
-        showMessage('Invalid email or password', false);
-      }
-    }
-
-    // click and Enter support
-    loginBtn.addEventListener('click', login);
-    [emailEl, passEl].forEach(el => el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') login();
-    }));
-  </script>
-</body>
 </html>
